@@ -11,11 +11,13 @@ import {
   NAV_NAME_CONTACT_DETAIL,
   NAV_NAME_CONTACT_FORM,
   NAV_NAME_CONTACT_LIST,
+  NAV_NAME_HELP,
   NAV_NAME_SPLASH,
 } from './contant';
 import ContactList from './screen/ContactList';
 import ContactForm from './screen/ContactForm';
 import ContactDetail from './screen/ContactDetail';
+import Help from './screen/Help';
 
 const Stack = createStackNavigator();
 
@@ -42,6 +44,7 @@ const App = () => {
                 name={NAV_NAME_CONTACT_DETAIL}
                 component={ContactDetail}
               />
+              <Stack.Screen name={NAV_NAME_HELP} component={Help} />
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>

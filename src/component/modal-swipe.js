@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import Modal from 'react-native-modal';
 import {COLOR_BACKGROUND, COLOR_SWIPE_MODAL} from '../contant';
 import {getScreenDimension} from '../helper';
+import {moderateScale} from 'react-native-size-matters';
 
 const {height, width} = getScreenDimension();
 
@@ -37,20 +38,20 @@ export default ModalSwipe;
 const styles = StyleSheet.create({
   container: {
     justifyContent: 'flex-end',
-    margin: 0,
+    margin: moderateScale(0),
   },
   content: {
     height: '30%',
     backgroundColor: COLOR_BACKGROUND,
-    borderTopRightRadius: 32,
-    borderTopLeftRadius: 32,
-    padding: 20,
+    borderTopRightRadius: moderateScale(32),
+    borderTopLeftRadius: moderateScale(32),
+    padding: moderateScale(20),
   },
   swipeable: {
-    height: 5,
-    width: 40,
+    height: moderateScale(5),
+    width: moderateScale(40),
     backgroundColor: COLOR_SWIPE_MODAL,
-    borderRadius: 3.5,
+    borderRadius: moderateScale(3.5),
     alignSelf: 'center',
   },
 });

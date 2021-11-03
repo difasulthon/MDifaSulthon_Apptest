@@ -6,6 +6,7 @@ import {
   COLOR_PRIMARY,
   FLOATING_BUTTON_SIZE,
 } from '../contant';
+import {moderateScale} from 'react-native-size-matters';
 
 const ButtonAdd = ({onPress}) => {
   return (
@@ -14,7 +15,7 @@ const ButtonAdd = ({onPress}) => {
         <Icon
           name="account-plus"
           type="material-community"
-          size={30}
+          size={moderateScale(30)}
           color={COLOR_BACKGROUND}
         />
       </View>
@@ -27,13 +28,13 @@ export default ButtonAdd;
 const styles = StyleSheet.create({
   floatButton: {
     position: 'absolute',
-    bottom: 20,
-    right: 16,
-    height: FLOATING_BUTTON_SIZE,
-    width: FLOATING_BUTTON_SIZE,
-    borderRadius: FLOATING_BUTTON_SIZE / 2,
+    bottom: moderateScale(20),
+    right: moderateScale(16),
+    height: moderateScale(FLOATING_BUTTON_SIZE),
+    width: moderateScale(FLOATING_BUTTON_SIZE),
+    borderRadius: moderateScale(FLOATING_BUTTON_SIZE / 2),
     backgroundColor: COLOR_PRIMARY,
-    zIndex: 999,
+    zIndex: moderateScale(999),
     justifyContent: 'center',
     alignItems: 'center',
   },

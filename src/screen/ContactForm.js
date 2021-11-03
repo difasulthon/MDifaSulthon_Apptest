@@ -28,6 +28,10 @@ import {
 import navigationService from '../navigation-service';
 import ImgToBase64 from 'react-native-image-base64';
 import LocalizedString from '../localization';
+import {useDispatch, useSelector} from 'react-redux';
+import getListContactAsync from '../redux/action/async/getListContactAsync';
+import {clearListContact} from '../redux/action';
+import {moderateScale} from 'react-native-size-matters';
 
 const {width} = getScreenDimension();
 
@@ -53,6 +57,9 @@ const ContactForm = ({route}) => {
   const [age, setAge] = useState(params ? params.age.toString() : '');
   const [photo, setPhoto] = useState(params ? params.photo : null);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+  const downloading = useSelector(state => state.contact.downloading);
 
   const onBackButton = () => {
     navigationService.back();
@@ -86,8 +93,10 @@ const ContactForm = ({route}) => {
       photo: photo,
     };
     if (params) {
-      putContact(data)
+      putContact(data, params.id)
         .then(res => {
+          dispatch(clearListContact());
+          dispatch(getListContactAsync());
           setLoading(false);
           alertInfo(res.message);
         })
@@ -99,6 +108,8 @@ const ContactForm = ({route}) => {
       postContact(data)
         .then(res => {
           resetValue();
+          dispatch(clearListContact());
+          dispatch(getListContactAsync());
           setLoading(false);
           alertInfo(res.message);
           navigationService.back();
@@ -155,7 +166,7 @@ const ContactForm = ({route}) => {
             ? LocalizedString.contactList.buttonCaptionUpdate
             : LocalizedString.contactForm.buttonCaptionAdd
         }
-        loading={loading}
+        loading={loading || downloading}
         onPress={onAddPress}
       />
     </BaseScreen>
@@ -166,48 +177,48 @@ export default ContactForm;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 20,
+    flex: moderateScale(1),
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScale(20),
   },
   photoContainer: {
-    flex: 1,
+    flex: moderateScale(1),
     alignSelf: 'center',
   },
   labelPhoto: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     fontFamily: POPPINS_REGULAR,
     color: COLOR_SECONDARY,
   },
   buttonAdd: {
-    marginHorizontal: 16,
-    marginBottom: 16,
+    marginHorizontal: moderateScale(16),
+    marginBottom: moderateScale(16),
   },
   pictureBoxContainer: {
     alignSelf: 'center',
-    flex: 1,
+    flex: moderateScale(1),
   },
   pictureBox: {
     width: (width - 25) / 2,
     height: (width - 25) / 2,
-    aspectRatio: 1,
-    borderRadius: 13,
+    aspectRatio: moderateScale(1),
+    borderRadius: moderateScale(13),
     borderColor: '#d6d7da',
     marginRight: 7,
   },
   iconRemovePicture: {
     position: 'absolute',
-    top: 0,
-    right: 0,
-    width: 32,
-    height: 32,
+    top: moderateScale(0),
+    right: moderateScale(0),
+    width: moderateScale(32),
+    height: moderateScale(32),
     backgroundColor: COLOR_BACKGROUND,
-    borderRadius: 32,
+    borderRadius: moderateScale(32),
     alignItems: 'center',
     justifyContent: 'center',
   },
   imageShow: {
-    borderRadius: 20,
+    borderRadius: moderateScale(20),
     height: '100%',
     borderWidth: 1,
     borderColor: COLOR_PRIMARY,

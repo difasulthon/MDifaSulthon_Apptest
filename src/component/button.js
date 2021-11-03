@@ -13,6 +13,7 @@ import {
   FONT_SIZE_BODY_BUTTON,
   POPPINS_SEMIBOLD,
 } from '../contant';
+import {moderateScale} from 'react-native-size-matters';
 
 const enabledButton = (caption, containerStyle, textStyle, onPress) => (
   <TouchableOpacity
@@ -68,9 +69,9 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR_PRIMARY,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 50,
-    height: 45,
-    paddingHorizontal: 25,
+    borderRadius: moderateScale(50),
+    height: moderateScale(45),
+    paddingHorizontal: moderateScale(25),
   },
   textStyle: {
     color: COLOR_BUTTON_TEXT,

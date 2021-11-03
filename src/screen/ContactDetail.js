@@ -5,6 +5,7 @@ import {BaseScreen, Body, H3} from '../component';
 import {COLOR_BACKGROUND} from '../contant';
 import {ios} from '../helper';
 import navigationService from '../navigation-service';
+import {moderateScale} from 'react-native-size-matters';
 
 const ContactDetail = ({route}) => {
   const params = route.params.data;
@@ -38,23 +39,23 @@ const styles = StyleSheet.create({
   photo: {
     width: '100%',
     height: '75%',
-    borderBottomRightRadius: 70,
+    borderBottomRightRadius: moderateScale(70),
   },
   detailContainer: {
-    paddingHorizontal: 16,
-    flex: 1,
+    paddingHorizontal: moderateScale(16),
+    flex: moderateScale(1),
     justifyContent: 'center',
     alignItems: 'center',
   },
   iconBackContainer: {
-    height: 40,
-    width: 40,
+    height: moderateScale(40),
+    width: moderateScale(40),
     backgroundColor: 'black',
     opacity: 0.4,
-    borderRadius: 40 / 2,
+    borderRadius: moderateScale(40 / 2),
     position: 'absolute',
-    top: 16,
-    left: 16,
+    top: moderateScale(16),
+    left: moderateScale(16),
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -3,6 +3,7 @@ import {StatusBar, StyleSheet, View} from 'react-native';
 import {COLOR_BACKGROUND} from '../contant';
 import {getScreenDimension} from '../helper';
 import SafeAreaView from './safe-area-view';
+import {moderateScale} from 'react-native-size-matters';
 
 const {height} = getScreenDimension();
 
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   }),
   page: {
     backgroundColor: COLOR_BACKGROUND,
-    flex: 1,
+    flex: moderateScale(1),
     height: height,
   },
 });

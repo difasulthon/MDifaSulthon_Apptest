@@ -14,6 +14,7 @@ import {
   FONT_SIZE_TEXT_INPUT,
   POPPINS_REGULAR,
 } from '../contant';
+import {moderateScale} from 'react-native-size-matters';
 
 const TextFieldOutline = ({
   onChangeText,
@@ -50,7 +51,7 @@ const TextFieldOutline = ({
       return (
         <IconFontAwesome5
           name={secureTextEntryState ? 'eye-slash' : 'eye'}
-          size={20}
+          size={moderateScale(20)}
           color={COLOR_INPUT_ICON}
           onPress={onPressShowPassword}
         />
@@ -72,7 +73,7 @@ const TextFieldOutline = ({
       return (
         <Icon
           name={iconName}
-          size={20}
+          size={moderateScale(20)}
           color={COLOR_INPUT_ICON}
           onPress={onPressShowPassword}
         />
@@ -143,7 +144,9 @@ const TextFieldOutline = ({
 
   const req = required && !hideRequiredFlagOnPlaceholder ? '(*)' : '';
 
-  const multilineStyle = multiline ? {marginVertical: 5, height: '87%'} : {};
+  const multilineStyle = multiline
+    ? {marginVertical: moderateScale(5), height: '87%'}
+    : {};
   const multilineContainer = multiline ? {} : {alignItems: 'center'};
 
   return (
@@ -188,45 +191,45 @@ export default TextFieldOutline;
 const styles = StyleSheet.create({
   horizontalLine: {
     backgroundColor: COLOR_INPUT_BORDER_INACTIVE,
-    height: 1,
-    flex: 1,
+    height: moderateScale(1),
+    flex: moderateScale(1),
     alignSelf: 'center',
-    marginLeft: 3,
+    marginLeft: moderateScale(3),
   },
   borderContainer: {
     borderColor: COLOR_INPUT_BORDER_INACTIVE,
-    borderRadius: 5,
-    borderWidth: 1,
-    paddingHorizontal: 15,
+    borderRadius: moderateScale(5),
+    borderWidth: moderateScale(1),
+    paddingHorizontal: moderateScale(15),
     justifyContent: 'space-between',
   },
   labelContainer: {
     flexDirection: 'row',
-    marginLeft: -3,
-    marginTop: -14,
+    marginLeft: moderateScale(-3),
+    marginTop: moderateScale(-14),
     backgroundColor: COLOR_BACKGROUND,
     maxWidth: '55%',
   },
   labelText: {
-    fontSize: 16,
+    fontSize: moderateScale(16),
     color: COLOR_TEXT_INPUT,
     backgroundColor: COLOR_BACKGROUND,
     fontFamily: POPPINS_REGULAR,
   },
   textInputContainer: {
     alignSelf: 'stretch',
-    flex: 1,
+    flex: moderateScale(1),
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   textInputStyle: automaticGenerate => ({
     color: automaticGenerate ? COLOR_TEXT_INPUT_DISABLE : COLOR_TEXT_INPUT,
     fontSize: FONT_SIZE_TEXT_INPUT,
-    flex: 1,
+    flex: moderateScale(1),
     fontFamily: POPPINS_REGULAR,
   }),
   errorTextStyle: {
-    marginTop: 8,
+    marginTop: moderateScale(8),
     color: COLOR_ERROR,
   },
 });

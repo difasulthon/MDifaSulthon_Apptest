@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, Image, RefreshControl, StyleSheet, View} from 'react-native';
+import {Icon} from 'react-native-elements';
+import {useDispatch} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {
   BaseScreen,
   Body,
@@ -16,8 +19,10 @@ import {
   COLOR_BACKGROUND,
   COLOR_ERROR,
   COLOR_PRIMARY,
+  COLOR_SECONDARY,
   NAV_NAME_CONTACT_DETAIL,
   NAV_NAME_CONTACT_FORM,
+  NAV_NAME_HELP,
 } from '../contant';
 import {
   alertAskForConfirmation,
@@ -25,36 +30,34 @@ import {
   alertInfo,
   deleteContact,
   getContactById,
-  getContacts,
 } from '../helper';
 import LocalizedString from '../localization';
 import navigationService from '../navigation-service';
+import {clearListContact} from '../redux/action';
+import getListContactAsync from '../redux/action/async/getListContactAsync';
+import {moderateScale} from 'react-native-size-matters';
 
 const ContactList = () => {
   const [loading, setLoading] = useState(false);
-  const [contacts, setContacts] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [chooseItem, setChooseItem] = useState({});
+
+  const downloading = useSelector(state => state.contact.downloading);
+  const listContact = useSelector(state => state.contact.listContact);
+
+  const dispatch = useDispatch();
 
   const onAddContact = () => {
     navigationService.navigate(NAV_NAME_CONTACT_FORM);
   };
 
-  const onApear = () => {
-    setLoading(true);
-    getContacts()
-      .then(res => {
-        setContacts(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        setLoading(false);
-        alertError(err.message);
-      });
+  const onRefresh = () => {
+    dispatch(clearListContact());
+    dispatch(getListContactAsync());
   };
 
   useEffect(() => {
-    onApear();
+    dispatch(getListContactAsync());
   }, []);
 
   const onPressCrad = item => {
@@ -97,7 +100,7 @@ const ContactList = () => {
         setIsModalVisible(false);
         deleteContact(data.id)
           .then(async res => {
-            // onApear();
+            dispatch(getListContactAsync());
             setLoading(false);
             alertInfo(res.message);
           })
@@ -114,21 +117,32 @@ const ContactList = () => {
       <View style={styles.container}>
         <H1 bold>Hi, {LocalizedString.contactList.labelUser}!</H1>
         <View style={styles.subtitleContainer}>
-          <BodySmall style={styles.blueText}>
-            {LocalizedString.contactList.labelView}
-          </BodySmall>
-          <BodySmall> & </BodySmall>
-          <BodySmall style={styles.blueText}>
-            {LocalizedString.contactList.labelAdd}{' '}
-          </BodySmall>
-          <BodySmall>{LocalizedString.contactList.labelYourContact}</BodySmall>
+          <View style={styles.greetingContainer}>
+            <BodySmall style={styles.blueText}>
+              {LocalizedString.contactList.labelView}
+            </BodySmall>
+            <BodySmall> & </BodySmall>
+            <BodySmall style={styles.blueText}>
+              {LocalizedString.contactList.labelAdd}{' '}
+            </BodySmall>
+            <BodySmall>
+              {LocalizedString.contactList.labelYourContact}
+            </BodySmall>
+          </View>
+          <Icon
+            name="newspaper"
+            type="ionicon"
+            size={24}
+            color={COLOR_SECONDARY}
+            onPress={() => navigationService.navigate(NAV_NAME_HELP)}
+          />
         </View>
         <VerticalSpacer height={24} />
         <HorizontalLine />
         <VerticalSpacer height={24} />
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={contacts}
+          data={listContact}
           key={'_'}
           keyExtractor={ix => '_' + ix.id}
           renderItem={({item}) => {
@@ -143,14 +157,15 @@ const ContactList = () => {
           style={styles.listContainer}
           refreshControl={
             <RefreshControl
-              refreshing={loading}
-              onRefresh={onApear}
+              refreshing={loading || downloading}
+              onRefresh={onRefresh}
               enabled
               progressBackgroundColor={COLOR_BACKGROUND}
               colors={[COLOR_PRIMARY]}
             />
           }
         />
+
         <ButtonAdd onPress={onAddContact} />
       </View>
       <ModalSwipe
@@ -208,44 +223,49 @@ export default ContactList;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingTop: 30,
-    paddingVertical: 10,
+    flex: moderateScale(1),
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScale(30),
+    paddingVertical: moderateScale(10),
+  },
+  greetingContainer: {
+    flex: moderateScale(1),
+    flexDirection: 'row',
   },
   subtitleContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   blueText: {
     color: COLOR_PRIMARY,
   },
   listContainer: {
-    flex: 1,
+    flex: moderateScale(1),
   },
   modalContainer: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    flex: moderateScale(1),
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: moderateScale(10),
   },
   photoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: 12,
+    paddingLeft: moderateScale(12),
   },
   photo: {
-    width: 80,
-    height: 80,
-    aspectRatio: 1,
-    borderRadius: 10,
-    borderWidth: 1,
+    width: moderateScale(80),
+    height: moderateScale(80),
+    aspectRatio: moderateScale(1),
+    borderRadius: moderateScale(10),
+    borderWidth: moderateScale(1),
     borderColor: COLOR_PRIMARY,
-    marginRight: 14,
+    marginRight: moderateScale(14),
   },
   modalContentContainer: {
-    flex: 1,
+    flex: moderateScale(1),
   },
   textContainer: {
-    flex: 1,
+    flex: moderateScale(1),
   },
   labelContainer: {
     flexDirection: 'row',

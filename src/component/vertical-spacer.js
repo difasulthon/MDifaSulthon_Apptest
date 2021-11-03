@@ -1,8 +1,9 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {moderateScale} from 'react-native-size-matters';
 
 const VerticalSpacer = ({height}) => {
-  return <View style={[styles.spacer, {height: height}]} />;
+  return <View style={[styles.spacer, {height: moderateScale(height)}]} />;
 };
 
 export default VerticalSpacer;

@@ -9,6 +9,7 @@ import {
   COLOR_TEXT_INPUT,
 } from '../contant';
 import {ios} from '../helper';
+import {moderateScale} from 'react-native-size-matters';
 
 const renderLeftContainer = (backButton, onBackButton) => {
   if (backButton) {
@@ -18,7 +19,7 @@ const renderLeftContainer = (backButton, onBackButton) => {
           name={ios ? 'ios-arrow-back' : 'md-arrow-back'}
           type="ionicon"
           color={COLOR_PRIMARY}
-          size={30}
+          size={moderateScale(30)}
         />
       </TouchableOpacity>
     );
@@ -32,7 +33,7 @@ const renderRefreshButton = (refreshButton, style, onPress) =>
       <Icon
         name="refresh"
         type="material-community"
-        size={30}
+        size={moderateScale(30)}
         color={COLOR_PRIMARY}
       />
     </TouchableOpacity>
@@ -45,7 +46,7 @@ const renderCloseButton = (closeButton, onPress) =>
         name={ios ? 'ios-close' : 'md-close'}
         type="ionicon"
         color={COLOR_PRIMARY}
-        size={30}
+        size={moderateScale(30)}
       />
     </TouchableOpacity>
   ) : null;
@@ -104,13 +105,13 @@ export default PageHeader;
 
 const styles = StyleSheet.create({
   container: {
-    height: 75,
+    height: moderateScale(75),
     flexDirection: 'row',
     backgroundColor: COLOR_BACKGROUND,
     alignItems: 'center',
-    marginBottom: ios ? 5 : 0,
-    paddingTop: 0,
-    borderBottomWidth: 1,
+    marginBottom: ios ? moderateScale(5) : moderateScale(0),
+    paddingTop: moderateScale(0),
+    borderBottomWidth: moderateScale(1),
     borderBottomColor: COLOR_BORDER,
   },
   rightContainer: {
@@ -119,17 +120,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   leftContainer: {
-    paddingLeft: 5,
-    paddingRight: 5,
+    paddingLeft: moderateScale(5),
+    paddingRight: moderateScale(5),
   },
   title: {
     color: COLOR_TEXT_INPUT,
   },
   refreshButton: {
-    paddingHorizontal: 5,
+    paddingHorizontal: moderateScale(5),
   },
   closeButton: {
-    paddingLeft: 10,
-    paddingRight: 5,
+    paddingLeft: moderateScale(10),
+    paddingRight: moderateScale(5),
   },
 });

@@ -7,24 +7,25 @@ import {
   COLOR_PRIMARY,
   POPPINS_LIGHT,
 } from '../contant';
+import {moderateScale} from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
   cardContentContainer: {
-    flex: 1,
-    borderRadius: 10,
-    borderWidth: 0.5,
+    flex: moderateScale(1),
+    borderRadius: moderateScale(10),
+    borderWidth: moderateScale(0.5),
     borderColor: COLOR_BORDER,
     backgroundColor: COLOR_BACKGROUND,
     shadowColor: '#000',
     shadowOffset: {
-      width: 0,
-      height: 1,
+      width: moderateScale(0),
+      height: moderateScale(1),
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-    marginBottom: 10,
-    marginTop: 10,
+    shadowOpacity: moderateScale(0.2),
+    shadowRadius: moderateScale(1.41),
+    elevation: moderateScale(2),
+    marginBottom: moderateScale(10),
+    marginTop: moderateScale(10),
   },
   cardContentRow: {
     flexDirection: 'row',
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 10,
+    padding: moderateScale(10),
   },
   ageText: {
     fontFamily: POPPINS_LIGHT,
@@ -40,15 +41,15 @@ const styles = StyleSheet.create({
   photoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: 12,
+    paddingLeft: moderateScale(12),
   },
   photo: {
-    width: 40,
-    height: 40,
-    aspectRatio: 1,
-    borderRadius: 40 / 2,
-    marginRight: 14,
-    borderWidth: 1,
+    width: moderateScale(40),
+    height: moderateScale(40),
+    aspectRatio: moderateScale(1),
+    borderRadius: moderateScale(40 / 2),
+    marginRight: moderateScale(14),
+    borderWidth: moderateScale(1),
     borderColor: COLOR_PRIMARY,
   },
 });

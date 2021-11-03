@@ -180,6 +180,7 @@ const sendDeleteRequest = async apiPath => {
   const method = REST_METHOD_DELETE;
   const headers = await getHttpHeaders();
   const response = await fetch(url, {method, headers});
+  console.log(url);
   return response;
 };
 
@@ -209,8 +210,8 @@ export const getContactById = async id => {
   return responseJSON;
 };
 
-export const putContact = async data => {
-  const response = await sendPutRequest(`${REST_URL_CONTACT}/${data.id}`, data);
+export const putContact = async (data, id) => {
+  const response = await sendPutRequest(`${REST_URL_CONTACT}/${id}`, data);
   const responseJSON = response.json();
   return responseJSON;
 };
