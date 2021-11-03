@@ -1,7 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Body, BodySmall} from '.';
-import {COLOR_BACKGROUND, COLOR_BORDER, POPPINS_LIGHT} from '../contant';
+import {
+  COLOR_BACKGROUND,
+  COLOR_BORDER,
+  COLOR_PRIMARY,
+  POPPINS_LIGHT,
+} from '../contant';
 
 const styles = StyleSheet.create({
   cardContentContainer: {
@@ -42,8 +47,9 @@ const styles = StyleSheet.create({
     height: 40,
     aspectRatio: 1,
     borderRadius: 40 / 2,
-    borderColor: '#d6d7da',
     marginRight: 14,
+    borderWidth: 1,
+    borderColor: COLOR_PRIMARY,
   },
 });
 

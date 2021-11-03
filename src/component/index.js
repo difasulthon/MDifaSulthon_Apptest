@@ -8,4 +8,5 @@ export {default as ButtonAdd} from './button-add';
 export {default as AddPhoto} from './add-photo';
 export {default as TextFieldOutline} from './text-field-outline';
 export {default as KeyboardAwareScrollView} from './keyboard-aware-scroll-view';
+export {default as ModalSwipe} from './modal-swipe';
 export * from './labels';

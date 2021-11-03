@@ -196,3 +196,23 @@ export const getContacts = async () => {
   const responseJSON = await response.json();
   return responseJSON;
 };
+
+export const deleteContact = async id => {
+  console.log(id);
+  const response = await sendDeleteRequest(`${REST_URL_CONTACT}/${id}`);
+  const responseJSON = response.json();
+  return responseJSON;
+};
+
+export const getContactById = async id => {
+  const url = `${REST_URL_CONTACT}/${id}`;
+  const response = await sendGetRequest(url);
+  const responseJSON = await response.json();
+  return responseJSON;
+};
+
+export const putContact = async data => {
+  const response = await sendPutRequest(`${REST_URL_CONTACT}/${data.id}`, data);
+  const responseJSON = response.json();
+  return responseJSON;
+};

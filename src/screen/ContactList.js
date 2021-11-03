@@ -1,25 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
+import {FlatList, Image, RefreshControl, StyleSheet, View} from 'react-native';
 import {
   BaseScreen,
+  Body,
   BodySmall,
+  Button,
   ButtonAdd,
   CardContact,
   H1,
   HorizontalLine,
+  ModalSwipe,
   VerticalSpacer,
 } from '../component';
 import {
   COLOR_BACKGROUND,
+  COLOR_ERROR,
   COLOR_PRIMARY,
   NAV_NAME_CONTACT_FORM,
 } from '../contant';
-import {getContacts} from '../helper';
+import {
+  alertAskForConfirmation,
+  alertError,
+  alertInfo,
+  deleteContact,
+  getContactById,
+  getContacts,
+} from '../helper';
 import navigationService from '../navigation-service';
 
 const ContactList = () => {
   const [loading, setLoading] = useState(false);
   const [contacts, setContacts] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [chooseItem, setChooseItem] = useState({});
 
   const onAddContact = () => {
     navigationService.navigate(NAV_NAME_CONTACT_FORM);
@@ -31,11 +44,10 @@ const ContactList = () => {
       .then(res => {
         setContacts(res.data);
         setLoading(false);
-        console.log(res);
       })
       .catch(err => {
         setLoading(false);
-        console.log(err);
+        alertError(err.message);
       });
   };
 
@@ -48,13 +60,49 @@ const ContactList = () => {
   };
 
   const onLongPressCard = item => {
+    setChooseItem(item);
+    setIsModalVisible(true);
     console.log(item);
+  };
+
+  const updateItem = data => {
+    setLoading(true);
+    setIsModalVisible(false);
+    getContactById(data.id)
+      .then(res => {
+        setLoading(false);
+        navigationService.navigate(NAV_NAME_CONTACT_FORM, {data: res.data});
+      })
+      .catch(err => {
+        setLoading(false);
+        alertError(err.message);
+      });
+  };
+
+  const deleteItem = data => {
+    alertAskForConfirmation(
+      `Apakah anda yakin ingin delete data ${data.firstName}?`,
+      () => {
+        setLoading(true);
+        setIsModalVisible(false);
+        deleteContact(data.id)
+          .then(async res => {
+            onApear();
+            setLoading(false);
+            alertInfo(res.message);
+          })
+          .catch(err => {
+            setLoading(false);
+            alertError(err.message);
+          });
+      },
+    );
   };
 
   return (
     <BaseScreen>
       <View style={styles.container}>
-        <H1 bold>Hi, Pengguna</H1>
+        <H1 bold>Hi, Pengguna!</H1>
         <View style={styles.subtitleContainer}>
           <BodySmall style={styles.blueText}>Lihat</BodySmall>
           <BodySmall> & </BodySmall>
@@ -91,6 +139,46 @@ const ContactList = () => {
         />
         <ButtonAdd onPress={onAddContact} />
       </View>
+      <ModalSwipe
+        isVisible={isModalVisible}
+        onSwipeComplete={() => setIsModalVisible(false)}>
+        <View style={styles.modalContainer}>
+          {chooseItem ? (
+            <>
+              <View style={styles.modalContentContainer}>
+                <View style={styles.detailContainer}>
+                  <Image
+                    style={styles.photo}
+                    source={{uri: chooseItem.photo}}
+                  />
+                  <View style={styles.textContainer}>
+                    <View style={styles.labelContainer}>
+                      <Body>First Name: </Body>
+                      <Body bold>{chooseItem.firstName}</Body>
+                    </View>
+                    <View style={styles.labelContainer}>
+                      <Body>Last Name: </Body>
+                      <Body bold>{chooseItem.lastName}</Body>
+                    </View>
+                    <View style={styles.labelContainer}>
+                      <Body>Age: </Body>
+                      <Body bold>{chooseItem.age}</Body>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </>
+          ) : null}
+          <View style={styles.buttonContainer}>
+            <Button caption="Update" onPress={() => updateItem(chooseItem)} />
+            <Button
+              containerStyle={styles.buttonDelete}
+              caption="Delete"
+              onPress={() => deleteItem(chooseItem)}
+            />
+          </View>
+        </View>
+      </ModalSwipe>
     </BaseScreen>
   );
 };
@@ -112,5 +200,42 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flex: 1,
+  },
+  modalContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+  },
+  photoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 12,
+  },
+  photo: {
+    width: 80,
+    height: 80,
+    aspectRatio: 1,
+    borderRadius: 80 / 2,
+    borderColor: '#d6d7da',
+    marginRight: 14,
+  },
+  modalContentContainer: {
+    flex: 1,
+  },
+  textContainer: {
+    flex: 1,
+  },
+  labelContainer: {
+    flexDirection: 'row',
+  },
+  detailContainer: {
+    flexDirection: 'row',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  buttonDelete: {
+    backgroundColor: COLOR_ERROR,
   },
 });

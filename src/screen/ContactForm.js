@@ -18,7 +18,13 @@ import {
   IMAGE_SOURCE_URI_PREFIX,
   POPPINS_REGULAR,
 } from '../contant';
-import {alertInfo, getScreenDimension, postContact} from '../helper';
+import {
+  alertError,
+  alertInfo,
+  getScreenDimension,
+  postContact,
+  putContact,
+} from '../helper';
 import navigationService from '../navigation-service';
 import ImgToBase64 from 'react-native-image-base64';
 
@@ -38,11 +44,14 @@ const renderPicture = (picture, onDeletePicture) => (
   </View>
 );
 
-const ContactForm = () => {
-  const [firtsName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [age, setAge] = useState('');
-  const [photo, setPhoto] = useState();
+const ContactForm = ({route}) => {
+  const params = route.params ? route.params.data : null;
+  console.log('param: ', params);
+
+  const [firtsName, setFirstName] = useState(params ? params.firstName : '');
+  const [lastName, setLastName] = useState(params ? params.lastName : '');
+  const [age, setAge] = useState(params ? params.age.toString() : '');
+  const [photo, setPhoto] = useState(params ? params.photo : null);
   const [loading, setLoading] = useState(false);
 
   const onBackButton = () => {
@@ -76,18 +85,31 @@ const ContactForm = () => {
       age: parseInt(age),
       photo: photo,
     };
-    postContact(data)
-      .then(res => {
-        console.log(res);
-        resetValue();
-        setLoading(false);
-        alertInfo(res.message);
-        navigationService.back();
-      })
-      .catch(err => {
-        console.log(err);
-        setLoading(false);
-      });
+    if (params) {
+      putContact(data)
+        .then(res => {
+          resetValue();
+          setLoading(false);
+          alertInfo(res.message);
+          navigationService.back();
+        })
+        .catch(err => {
+          alertError(err);
+          setLoading(false);
+        });
+    } else {
+      postContact(data)
+        .then(res => {
+          resetValue();
+          setLoading(false);
+          alertInfo(res.message);
+          navigationService.back();
+        })
+        .catch(err => {
+          alertError(err);
+          setLoading(false);
+        });
+    }
   };
 
   return (
@@ -130,7 +152,7 @@ const ContactForm = () => {
 
       <Button
         containerStyle={styles.buttonAdd}
-        caption="Tambah"
+        caption={params ? 'Update' : 'Tambah'}
         loading={loading}
         onPress={onAddPress}
       />
