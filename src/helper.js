@@ -154,7 +154,6 @@ const sendGetRequest = async apiPath => {
   const method = REST_METHOD_GET;
   const headers = await getHttpHeaders();
   const response = await fetch(url, {method, headers});
-  console.log(response);
   return response;
 };
 
@@ -198,7 +197,6 @@ export const getContacts = async () => {
 };
 
 export const deleteContact = async id => {
-  console.log(id);
   const response = await sendDeleteRequest(`${REST_URL_CONTACT}/${id}`);
   const responseJSON = response.json();
   return responseJSON;

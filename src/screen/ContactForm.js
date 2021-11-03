@@ -46,7 +46,6 @@ const renderPicture = (picture, onDeletePicture) => (
 
 const ContactForm = ({route}) => {
   const params = route.params ? route.params.data : null;
-  console.log('param: ', params);
 
   const [firtsName, setFirstName] = useState(params ? params.firstName : '');
   const [lastName, setLastName] = useState(params ? params.lastName : '');
@@ -88,10 +87,8 @@ const ContactForm = ({route}) => {
     if (params) {
       putContact(data)
         .then(res => {
-          resetValue();
           setLoading(false);
           alertInfo(res.message);
-          navigationService.back();
         })
         .catch(err => {
           alertError(err);

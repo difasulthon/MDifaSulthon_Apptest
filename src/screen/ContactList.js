@@ -16,6 +16,7 @@ import {
   COLOR_BACKGROUND,
   COLOR_ERROR,
   COLOR_PRIMARY,
+  NAV_NAME_CONTACT_DETAIL,
   NAV_NAME_CONTACT_FORM,
 } from '../contant';
 import {
@@ -56,13 +57,21 @@ const ContactList = () => {
   }, []);
 
   const onPressCrad = item => {
-    console.log(item);
+    setLoading(true);
+    getContactById(item.id)
+      .then(res => {
+        setLoading(false);
+        navigationService.navigate(NAV_NAME_CONTACT_DETAIL, {data: res.data});
+      })
+      .catch(err => {
+        setLoading(false);
+        alertError(err.message);
+      });
   };
 
   const onLongPressCard = item => {
     setChooseItem(item);
     setIsModalVisible(true);
-    console.log(item);
   };
 
   const updateItem = data => {
@@ -87,7 +96,7 @@ const ContactList = () => {
         setIsModalVisible(false);
         deleteContact(data.id)
           .then(async res => {
-            onApear();
+            // onApear();
             setLoading(false);
             alertInfo(res.message);
           })
@@ -215,8 +224,9 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     aspectRatio: 1,
-    borderRadius: 80 / 2,
-    borderColor: '#d6d7da',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: COLOR_PRIMARY,
     marginRight: 14,
   },
   modalContentContainer: {
