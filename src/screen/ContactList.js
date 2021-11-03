@@ -27,6 +27,7 @@ import {
   getContactById,
   getContacts,
 } from '../helper';
+import LocalizedString from '../localization';
 import navigationService from '../navigation-service';
 
 const ContactList = () => {
@@ -90,7 +91,7 @@ const ContactList = () => {
 
   const deleteItem = data => {
     alertAskForConfirmation(
-      `Apakah anda yakin ingin delete data ${data.firstName}?`,
+      `${LocalizedString.contactList.askDeleteConfirm} ${data.firstName}?`,
       () => {
         setLoading(true);
         setIsModalVisible(false);
@@ -111,12 +112,16 @@ const ContactList = () => {
   return (
     <BaseScreen>
       <View style={styles.container}>
-        <H1 bold>Hi, Pengguna!</H1>
+        <H1 bold>Hi, {LocalizedString.contactList.labelUser}!</H1>
         <View style={styles.subtitleContainer}>
-          <BodySmall style={styles.blueText}>Lihat</BodySmall>
+          <BodySmall style={styles.blueText}>
+            {LocalizedString.contactList.labelView}
+          </BodySmall>
           <BodySmall> & </BodySmall>
-          <BodySmall style={styles.blueText}>Tambahkan </BodySmall>
-          <BodySmall>Kontakmu Sekarang</BodySmall>
+          <BodySmall style={styles.blueText}>
+            {LocalizedString.contactList.labelAdd}{' '}
+          </BodySmall>
+          <BodySmall>{LocalizedString.contactList.labelYourContact}</BodySmall>
         </View>
         <VerticalSpacer height={24} />
         <HorizontalLine />
@@ -162,16 +167,20 @@ const ContactList = () => {
                   />
                   <View style={styles.textContainer}>
                     <View style={styles.labelContainer}>
-                      <Body>First Name: </Body>
+                      <Body>
+                        {LocalizedString.contactList.labelFirstName}:{' '}
+                      </Body>
                       <Body bold>{chooseItem.firstName}</Body>
                     </View>
                     <View style={styles.labelContainer}>
-                      <Body>Last Name: </Body>
+                      <Body>{LocalizedString.contactList.labelLastName}: </Body>
                       <Body bold>{chooseItem.lastName}</Body>
                     </View>
                     <View style={styles.labelContainer}>
-                      <Body>Age: </Body>
-                      <Body bold>{chooseItem.age}</Body>
+                      <Body>{LocalizedString.contactList.labelAge}: </Body>
+                      <Body bold>
+                        {chooseItem.age} {LocalizedString.contactList.labelYear}
+                      </Body>
                     </View>
                   </View>
                 </View>
@@ -179,10 +188,13 @@ const ContactList = () => {
             </>
           ) : null}
           <View style={styles.buttonContainer}>
-            <Button caption="Update" onPress={() => updateItem(chooseItem)} />
+            <Button
+              caption={LocalizedString.contactList.buttonCaptionUpdate}
+              onPress={() => updateItem(chooseItem)}
+            />
             <Button
               containerStyle={styles.buttonDelete}
-              caption="Delete"
+              caption={LocalizedString.contactList.buttonCpationDelete}
               onPress={() => deleteItem(chooseItem)}
             />
           </View>

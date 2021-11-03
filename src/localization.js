@@ -16,9 +16,29 @@ const LocalizedString = new LocalizedStrings({
       buttonCpationDelete: 'Delete',
     },
     splash: {
-      title: 'Splash Screen',
-      splash: 'Splash',
-      screen: 'Screen',
+      labelWelcome: 'Welcome to',
+    },
+    contactList: {
+      labelView: 'View',
+      labelAdd: 'Adding',
+      labelYourContact: 'Your Contact Now',
+      labelUser: 'User',
+      labelFirstName: 'First Name',
+      labelLastName: 'Last Name',
+      labelAge: 'Age',
+      labelYear: "year's old",
+
+      buttonCaptionUpdate: 'Update',
+      buttonCpationDelete: 'Delete',
+
+      askDeleteConfirm: 'Are you sure want to delete data',
+    },
+    contactForm: {
+      placeholderFirstName: 'Input your first name',
+      placeholderLastName: 'Input your last name',
+      placeholderAge: 'Input your age',
+
+      buttonCaptionAdd: 'Add',
     },
   },
   in: {
@@ -36,9 +56,29 @@ const LocalizedString = new LocalizedStrings({
       buttonCpationDelete: 'Hapus',
     },
     splash: {
-      title: 'Splash Screen',
-      splash: 'Splash',
-      screen: 'Screen',
+      labelWelcome: 'Selamat datang di',
+    },
+    contactList: {
+      labelView: 'Lihat',
+      labelAdd: 'Tambahkan',
+      labelYourContact: 'Kontakmu Sekarang',
+      labelUser: 'Pengguna',
+      labelFirstName: 'Nama Depan',
+      labelLastName: 'Nama Belakang',
+      labelAge: 'Usia',
+      labelYear: 'tahun',
+
+      buttonCaptionUpdate: 'Ubah',
+      buttonCpationDelete: 'Hapus',
+
+      askDeleteConfirm: 'Apakah anda yakin ingin delete data',
+    },
+    contactForm: {
+      placeholderFirstName: 'Masukan nama depan anda',
+      placeholderLastName: 'Masukan nama belakang anda',
+      placeholderAge: 'Masukan usia anda',
+
+      buttonCaptionAdd: 'Tambah',
     },
   },
 });

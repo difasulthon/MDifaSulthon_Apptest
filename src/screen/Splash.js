@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BaseScreen, Body, H4} from '../component';
 import {NAV_NAME_CONTACT_LIST} from '../contant';
+import LocalizedString from '../localization';
 import navigationService from '../navigation-service';
 
 const Splash = () => {
@@ -14,7 +15,7 @@ const Splash = () => {
   return (
     <BaseScreen>
       <View style={styles.container}>
-        <Body>Welcome to</Body>
+        <Body>{LocalizedString.splash.labelWelcome}</Body>
         <H4 bold>CONTACT APP</H4>
       </View>
     </BaseScreen>

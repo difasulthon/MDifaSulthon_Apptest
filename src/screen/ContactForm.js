@@ -27,6 +27,7 @@ import {
 } from '../helper';
 import navigationService from '../navigation-service';
 import ImgToBase64 from 'react-native-image-base64';
+import LocalizedString from '../localization';
 
 const {width} = getScreenDimension();
 
@@ -123,22 +124,22 @@ const ContactForm = ({route}) => {
           </View>
           <VerticalSpacer height={20} />
           <TextFieldOutline
-            label="Firts Name"
-            placeholder="Input your first name"
+            label={LocalizedString.contactList.labelFirstName}
+            placeholder={LocalizedString.contactForm.placeholderFirstName}
             value={firtsName}
             onChangeText={text => setFirstName(text)}
           />
           <VerticalSpacer height={20} />
           <TextFieldOutline
-            label="Last Name"
-            placeholder="Input your last name"
+            label={LocalizedString.contactList.labelLastName}
+            placeholder={LocalizedString.contactForm.placeholderLastName}
             value={lastName}
             onChangeText={text => setLastName(text)}
           />
           <VerticalSpacer height={20} />
           <TextFieldOutline
-            label="Age"
-            placeholder="Input your age"
+            label={LocalizedString.contactList.labelAge}
+            placeholder={LocalizedString.contactForm.placeholderAge}
             value={age}
             onChangeText={text => setAge(text)}
             keyboardType="numeric"
@@ -149,7 +150,11 @@ const ContactForm = ({route}) => {
 
       <Button
         containerStyle={styles.buttonAdd}
-        caption={params ? 'Update' : 'Tambah'}
+        caption={
+          params
+            ? LocalizedString.contactList.buttonCaptionUpdate
+            : LocalizedString.contactForm.buttonCaptionAdd
+        }
         loading={loading}
         onPress={onAddPress}
       />
