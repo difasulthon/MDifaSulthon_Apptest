@@ -1,51 +1,54 @@
-import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
 import {
   BaseScreen,
   BodySmall,
   ButtonAdd,
-  Card,
+  CardContact,
   H1,
   HorizontalLine,
   VerticalSpacer,
 } from '../component';
-import {COLOR_PRIMARY, NAV_NAME_CONTACT_FORM} from '../contant';
+import {
+  COLOR_BACKGROUND,
+  COLOR_PRIMARY,
+  NAV_NAME_CONTACT_FORM,
+} from '../contant';
+import {getContacts} from '../helper';
 import navigationService from '../navigation-service';
 
-const contact = [
-  {
-    id: 1,
-    firstName: 'Difa',
-    lastName: 'Sulthon',
-    age: 23,
-  },
-  {
-    id: 2,
-    firstName: 'Difa',
-    lastName: 'Sulthon',
-    age: 23,
-  },
-  {
-    id: 3,
-    firstName: 'Difa',
-    lastName: 'Sulthon',
-    age: 23,
-  },
-  {
-    id: 4,
-    firstName: 'Difa',
-    lastName: 'Sulthon',
-    age: 23,
-  },
-];
-
 const ContactList = () => {
-  const renderContactItem = ({item}) => {
-    return <Card item={item} />;
-  };
+  const [loading, setLoading] = useState(false);
+  const [contacts, setContacts] = useState([]);
 
   const onAddContact = () => {
     navigationService.navigate(NAV_NAME_CONTACT_FORM);
+  };
+
+  const onApear = () => {
+    setLoading(true);
+    getContacts()
+      .then(res => {
+        setContacts(res.data);
+        setLoading(false);
+        console.log(res);
+      })
+      .catch(err => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    onApear();
+  }, []);
+
+  const onPressCrad = item => {
+    console.log(item);
+  };
+
+  const onLongPressCard = item => {
+    console.log(item);
   };
 
   return (
@@ -63,11 +66,28 @@ const ContactList = () => {
         <VerticalSpacer height={24} />
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={contact}
+          data={contacts}
           key={'_'}
           keyExtractor={ix => '_' + ix.id}
-          renderItem={renderContactItem}
+          renderItem={({item}) => {
+            return (
+              <CardContact
+                item={item}
+                onPress={onPressCrad}
+                onLongPress={onLongPressCard}
+              />
+            );
+          }}
           style={styles.listContainer}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={onApear}
+              enabled
+              progressBackgroundColor={COLOR_BACKGROUND}
+              colors={[COLOR_PRIMARY]}
+            />
+          }
         />
         <ButtonAdd onPress={onAddContact} />
       </View>

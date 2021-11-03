@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {Body, BodySmall} from '.';
 import {COLOR_BACKGROUND, COLOR_BORDER, POPPINS_LIGHT} from '../contant';
 
@@ -32,13 +32,31 @@ const styles = StyleSheet.create({
   ageText: {
     fontFamily: POPPINS_LIGHT,
   },
+  photoContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 12,
+  },
+  photo: {
+    width: 40,
+    height: 40,
+    aspectRatio: 1,
+    borderRadius: 40 / 2,
+    borderColor: '#d6d7da',
+    marginRight: 14,
+  },
 });
 
-const Card = ({item}) => {
+const CardContact = ({item, onPress, onLongPress}) => {
   return (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity
+      onLongPress={() => onLongPress(item)}
+      onPress={() => onPress(item)}>
       <View style={styles.cardContentContainer}>
         <View style={styles.cardContentRow}>
+          <View style={styles.photoContainer}>
+            <Image style={styles.photo} source={{uri: item.photo}} />
+          </View>
           <View style={styles.content}>
             <Body numberOfLines={2} ellipsizeMode="tail" bold>
               {item.firstName} {item.lastName}
@@ -55,4 +73,4 @@ const areEqual = (prevProps, nextProps) => {
   return prevProps.text === nextProps.text;
 };
 
-export default React.memo(Card, areEqual);
+export default React.memo(CardContact, areEqual);

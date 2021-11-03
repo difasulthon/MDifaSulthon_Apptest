@@ -1,5 +1,15 @@
 export const IS_PRODUCTION = false;
 
+export const REST_URL_BASE = 'https://simple-contact-crud.herokuapp.com';
+
+export const REST_URL_CONTACT = '/contact';
+
+export const HTTP_HEADER_VALUE_JSON = 'application/json';
+export const REST_METHOD_POST = 'POST';
+export const REST_METHOD_PUT = 'PUT';
+export const REST_METHOD_GET = 'GET';
+export const REST_METHOD_DELETE = 'DELETE';
+
 export const NAV_NAME_SPLASH = 'NAV_NAME_SPLASH';
 export const NAV_NAME_APP = 'NAV_NAME_APP';
 export const NAV_NAME_CONTACT_LIST = 'NAV_NAME_CONTACT_LIST';
@@ -43,3 +53,5 @@ export const FONT_SIZE_TEXT_INPUT = 16;
 export const smallDeviceHeightStandard = 615;
 
 export const FLOATING_BUTTON_SIZE = 65;
+
+export const IMAGE_SOURCE_URI_PREFIX = 'data:image/png;base64,';

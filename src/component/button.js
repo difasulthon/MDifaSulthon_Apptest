@@ -9,8 +9,9 @@ import {
 import {
   COLOR_BUTTON_TEXT,
   COLOR_DISABLE,
-  COLOR_SECONDARY,
+  COLOR_PRIMARY,
   FONT_SIZE_BODY_BUTTON,
+  POPPINS_SEMIBOLD,
 } from '../contant';
 
 const enabledButton = (caption, containerStyle, textStyle, onPress) => (
@@ -64,7 +65,7 @@ export default Button;
 
 const styles = StyleSheet.create({
   enableButtonContainer: {
-    backgroundColor: COLOR_SECONDARY,
+    backgroundColor: COLOR_PRIMARY,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: COLOR_BUTTON_TEXT,
     fontSize: FONT_SIZE_BODY_BUTTON,
-    fontFamily: 'Nunito-Bold',
+    fontFamily: POPPINS_SEMIBOLD,
     textAlign: 'center',
   },
   disabled: {

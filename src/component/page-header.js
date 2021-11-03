@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: COLOR_TEXT_INPUT,
-    fontFamily: 'Nunito-Bold',
   },
   refreshButton: {
     paddingHorizontal: 5,

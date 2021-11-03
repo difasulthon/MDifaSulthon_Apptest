@@ -1,5 +1,14 @@
 import {Alert, Dimensions, Platform} from 'react-native';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {
+  HTTP_HEADER_VALUE_JSON,
+  REST_METHOD_DELETE,
+  REST_METHOD_GET,
+  REST_METHOD_POST,
+  REST_METHOD_PUT,
+  REST_URL_BASE,
+  REST_URL_CONTACT,
+} from './contant';
 import LocalizedString from './localization';
 
 export const getScreenDimension = () => {
@@ -130,4 +139,60 @@ export const alertAskForConfirmation = (message, yesCallback, noCallback) => {
     ],
     {cancelable: false},
   );
+};
+
+const getHttpHeaders = async () => {
+  const headers = {
+    'Content-Type': HTTP_HEADER_VALUE_JSON,
+    Accept: HTTP_HEADER_VALUE_JSON,
+  };
+  return headers;
+};
+
+const sendGetRequest = async apiPath => {
+  const url = `${REST_URL_BASE}${apiPath}`;
+  const method = REST_METHOD_GET;
+  const headers = await getHttpHeaders();
+  const response = await fetch(url, {method, headers});
+  console.log(response);
+  return response;
+};
+
+const sendPostRequest = async (apiPath, body) => {
+  const bodyStr = JSON.stringify(body);
+  const url = `${REST_URL_BASE}${apiPath}`;
+  const method = REST_METHOD_POST;
+  const headers = await getHttpHeaders();
+  const response = await fetch(url, {method, headers, body: bodyStr});
+  return response;
+};
+
+const sendPutRequest = async (apiPath, body) => {
+  const bodyStr = JSON.stringify(body);
+  const url = `${REST_URL_BASE}${apiPath}`;
+  const method = REST_METHOD_PUT;
+  const headers = await getHttpHeaders();
+  const response = await fetch(url, {method, headers, body: bodyStr});
+  return response;
+};
+
+const sendDeleteRequest = async apiPath => {
+  const url = `${REST_URL_BASE}${apiPath}`;
+  const method = REST_METHOD_DELETE;
+  const headers = await getHttpHeaders();
+  const response = await fetch(url, {method, headers});
+  return response;
+};
+
+export const postContact = async data => {
+  const response = await sendPostRequest(REST_URL_CONTACT, data);
+  const responseJSON = response.json();
+  return responseJSON;
+};
+
+export const getContacts = async () => {
+  const url = `${REST_URL_CONTACT}`;
+  const response = await sendGetRequest(url);
+  const responseJSON = await response.json();
+  return responseJSON;
 };
