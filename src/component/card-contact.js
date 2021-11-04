@@ -8,6 +8,7 @@ import {
   POPPINS_LIGHT,
 } from '../contant';
 import {moderateScale} from 'react-native-size-matters';
+import LocalizedString from '../localization';
 
 const styles = StyleSheet.create({
   cardContentContainer: {
@@ -68,7 +69,9 @@ const CardContact = ({item, onPress, onLongPress}) => {
             <Body numberOfLines={2} ellipsizeMode="tail" bold>
               {item.firstName} {item.lastName}
             </Body>
-            <BodySmall style={styles.ageText}>{item.age} Tahun</BodySmall>
+            <BodySmall style={styles.ageText}>
+              {item.age} {LocalizedString.contactList.labelYear}
+            </BodySmall>
           </View>
         </View>
       </View>

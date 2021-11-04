@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center',
   },
-  listPictureContainer: {
+  pictureBoxContainer: {
     flex: moderateScale(1),
   },
-  listPictureBox: {
+  pictureBox: {
     width: (width - 25) / 2,
     height: (width - 25) / 2,
     aspectRatio: moderateScale(1),
@@ -57,8 +57,8 @@ const AddPhoto = ({onSelectPicture, loading}) => {
   if (loading) {
     return (
       <View style={styles.container}>
-        <View style={styles.listPictureContainer}>
-          <View style={styles.listPictureBox}>
+        <View style={styles.pictureBoxContainer}>
+          <View style={styles.pictureBox}>
             <ActivityIndicator size="small" color={COLOR_PRIMARY} />
           </View>
         </View>
@@ -67,9 +67,9 @@ const AddPhoto = ({onSelectPicture, loading}) => {
   }
   return (
     <View style={styles.container}>
-      <View style={styles.listPictureContainer}>
+      <View style={styles.pictureBoxContainer}>
         <TouchableOpacity
-          style={styles.listPictureBox}
+          style={styles.pictureBox}
           onPress={() => renderSelectPicture(onSelectPicture)}>
           {renderIconAddPhoto()}
         </TouchableOpacity>
